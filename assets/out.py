@@ -10,7 +10,7 @@ from typing import Optional
 
 import requests
 
-mandatory_source_params = {'api_key', 'user'}
+mandatory_source_params = {'headers', 'user'}
 mandatory_params = {'git_src_directory'}
 either_or_params = {'app_id', 'api_url'}
 
@@ -65,7 +65,7 @@ if __name__ == '__main__':
             sys.stderr.write(validation_result.error_message)
             exit(1)
 
-        api_key = source['api_key']
+        headers = source['headers']
         user = source['user']
         git_src_directory = params['git_src_directory']
 
@@ -95,7 +95,7 @@ if __name__ == '__main__':
             }
         }
 
-        response = requests.post(url, json=data, headers={'X-Api-Key': api_key})
+        response = requests.post(url, json=data, headers=headers)
         response.raise_for_status()
 
         sys.stderr.write(f'✅ Deployment marker added successfully: {response.status_code}\n')
